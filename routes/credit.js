@@ -1,6 +1,5 @@
 import express from "express";
 import Credit from "../models/Credit.js";
-import Statement from "../models/Statement.js";
 import { depositToCreditAcc } from "../controller/credit.js";
 import { createStatement } from "../controller/statement.js";
 

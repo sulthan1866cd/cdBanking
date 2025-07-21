@@ -1,6 +1,5 @@
 import express from "express";
 import Saving from "../models/Saving.js";
-import Statement from "../models/Statement.js";
 import { depositToSavingsAcc } from "../controller/savings.js";
 import { createStatement } from "../controller/statement.js";
 

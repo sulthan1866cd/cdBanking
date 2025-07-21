@@ -1,6 +1,5 @@
 import express from "express";
 import Current from "../models/Current.js";
-import Statement from "../models/Statement.js";
 import { depositToCurrentAcc } from "../controller/current.js";
 import { createStatement } from "../controller/statement.js";
 
