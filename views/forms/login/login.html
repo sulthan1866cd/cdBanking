@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CD Banking - form</title>
+    <link rel="stylesheet" href="../../style.css" />
+    <link rel="stylesheet" href="../form.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Lilita+One&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto+Slab:wght@453&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <p id="toast" class="toast-error"></p>
+
+    <img class="form-icon" src="../../images/CDicon.png" alt="CD" />
+    <div class="form-container">
+      <section class="form-heading-container">
+        <h1 class="roboto-condensed-thick form-heading text-teal">
+          Welcome to <br /><span class="text-orange">Crystal Delta</span><br />
+          Banking
+        </h1>
+      </section>
+
+      <section class="form-form-container">
+        <div class="form-form-content">
+          <h3 class="text-teal form-form-heading">
+            <b>Login to your account</b>
+          </h3>
+          <div class="form-form-input">
+            <label for="" class="text-teal">Customer ID</label>
+            <input type="text" id="cID" placeholder="Enter your customer id" />
+            <p class="text-red" id="cIDMessage"></p>
+          </div>
+
+          <div class="form-form-input">
+            <label for="" class="text-teal">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+            />
+            <p class="text-red" id="passwordMessage"></p>
+          </div>
+          <button type="button" class="btn btn-teal" onclick="validate()">
+            <h3>Login</h3>
+          </button>
+          <div class="sign-up">
+            <p>No account yet?</p>
+            <a href="../signup/signup.html">sign up</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+  <script src="login.js"></script>
+</html>
