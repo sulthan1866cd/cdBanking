@@ -1,0 +1,27 @@
+{
+  "name": "cd-banking",
+  "version": "1.0.0",
+  "description": "basic banking service by CD",
+  "main": "app.js",
+  "repository": "https://github.com/sulthan1866cd/cdBanking",
+  "author": "sulthan1866cd",
+  "license": "MIT",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "pg": "^8.16.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
