@@ -1,6 +1,8 @@
 import express from "express";
 import Saving from "../models/Saving.js";
 import Statement from "../models/Statement.js";
+import { depositToSavingsAcc } from "../controller/savings.js";
+import { createStatement } from "../controller/statement.js";
 
 const router = express.Router();
 
@@ -13,24 +15,18 @@ router.get("/:customer_id", async (req, res) => {
 });
 
 router.put("/:customer_id", async (req, res) => {
-    const customer_id = req.params.customer_id;
-    const ammount = req.body.ammount;
-    const description = req.body.description;
-    const savingsAcc = await Saving.findOne({
-      where: { userCustomerId: customer_id },
-    });
-    savingsAcc.balence += ammount;
-    const statement = {
-      customer_id: customer_id,
-      description: description,
-      account: "saving",
-      amount: ammount,
-      closing_balence: savingsAcc.balence,
-    };
-    Statement.create(statement);
-    savingsAcc.save();
-    res.sendStatus(200);
-
+  const customer_id = req.params.customer_id;
+  const ammount = req.body.ammount;
+  const description = req.body.description;
+  const savingsAcc = await depositToSavingsAcc(customer_id, ammount);
+  createStatement(
+    customer_id,
+    description,
+    "saving",
+    ammount,
+    savingsAcc.balence
+  );
+  res.sendStatus(200);
 });
 
 export default router;

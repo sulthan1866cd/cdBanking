@@ -1,20 +1,17 @@
 import express from "express";
-import Statement from "../models/Statement.js";
+import { findAllStatementsByObj } from "../controller/statement.js";
 
 const router = express.Router();
 
-router.get("/:account/:customer_id", async(req, res) => {
-    console.log("dfrwfwe")
+router.get("/:account/:customer_id", async (req, res) => {
   const account = req.params.account;
   const customer_id = req.params.customer_id;
-  const statements = await Statement.findAll({
-    where: {
-      account: account,
-      customer_id: customer_id,
-    },
+  const statements = await findAllStatementsByObj({
+    account: account,
+    customer_id: customer_id,
   });
+
   res.json(statements);
-  console.log(statements)
 });
 
 export default router;

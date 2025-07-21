@@ -1,71 +1,32 @@
 import express from "express";
-import User from "../models/User.js";
 import bcrypt from "bcrypt";
-import Saving from "../models/Saving.js";
-import Current from "../models/Current.js";
-import Credit from "../models/Credit.js";
+import { createUser, getAllUsers, getUserByCId } from "../controller/user.js";
+import { createSavingsAccount } from "../controller/savings.js";
+import { createCurrentAccount } from "../controller/current.js";
+import { createCreditAccount } from "../controller/credit.js";
 
 const router = express.Router();
-router.get('/',async (req,res)=>{
-    res.json(await User.findAll())
-})
+router.get("/", async (req, res) => {
+  res.json(await getAllUsers());
+});
 
-const ifscs = {
-  "Ashok Nagar": "CDBL0009",
-  Aruppukottai: "CDBL1010",
-  "Gandhi Nagar": "CDBL0032",
-};
 router.post("/", async (req, res) => {
-  try {
-    const newUser = req.body;
-    if (await User.findByPk(newUser.customer_id)) {
-      res.sendStatus(500);
-      return;
-    }
-    newUser.password = await bcrypt.hash(newUser.password, 12);
-    const branch = newUser.branch;
-    delete newUser.branch;
-    User.create(newUser);
-
-    const savingsAcc = {
-      savings_acc_no: String((Math.random() * 1000000000).toFixed(0)),
-      userCustomerId:newUser.customer_id,
-      balence: 0,
-      branch: branch,
-      ifsc: ifscs[branch],
-    };
-    Saving.create(savingsAcc);
-    const currentAcc = {
-      current_acc_no: String((Math.random() * 1000000000).toFixed(0)),
-      userCustomerId:newUser.customer_id,
-      balence: 0,
-      branch: branch,
-      ifsc: ifscs[branch],
-    };
-    Current.create(currentAcc);
-    const creditAcc = {
-      credit_card_no: String((Math.random() * 1000000000000000).toFixed(0)),
-      userCustomerId:newUser.customer_id,
-      balence: 0,
-      type: "Visa",
-    };
-    Credit.create(creditAcc);
-    res.sendStatus(201);
-  } catch (error) {
-    console.log("Error: " + error);
-  }
+  createUser(req, res);
+  createSavingsAccount(req, res);
+  createCurrentAccount(req, res);
+  createCreditAccount(req, res);
 });
 
 router.get("/:customer_id", async (req, res) => {
   const customer_id = req.params.customer_id;
-  const customer = await User.findByPk(customer_id);
+  const customer = await getUserByCId(customer_id);
   res.json(customer);
 });
 
 router.put("/:customer_id", async (req, res) => {
   const customer_id = req.params.customer_id;
   const password = req.body.password;
-  const customer = await User.findByPk(customer_id);
+  const customer = await getUserByCId(customer_id);
   if (!customer) {
     res.sendStatus(404);
   } else
