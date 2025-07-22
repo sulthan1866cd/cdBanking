@@ -1,15 +1,12 @@
 import express from "express";
-import Credit from "../models/Credit.js";
-import { depositToCreditAcc } from "../controller/credit.js";
+import { depositToCreditAcc, getCreditAccountWithCustomerId } from "../controller/credit.js";
 import { createStatement } from "../controller/statement.js";
 
 const router = express.Router();
 
 router.get("/:customer_id", async (req, res) => {
   const customer_id = req.params.customer_id;
-  const creditAcc = await Credit.findOne({
-    where: { userCustomerId: customer_id },
-  });
+  const creditAcc = await getCreditAccountWithCustomerId(customer_id)
   res.json(creditAcc);
 });
 

@@ -35,7 +35,7 @@ router.put("/:customer_id", async (req, res) => {
       if (!isMatch) {
         res.json(null);
       } else {
-        res.send({ customer_id });
+        res.json({ customer_id });
       }
     });
 });

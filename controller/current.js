@@ -14,6 +14,12 @@ export const createCurrentAccount = (req, res) => {
   Current.create(currentAcc);
 };
 
+export const getCurrentAccountWithCustomerId = (customer_id) => {
+  return Current.findOne({
+    where: { userCustomerId: customer_id },
+  });
+};
+
 export const depositToCurrentAcc = async (customer_id, ammount) => {
   const currentAcc = await Current.findOne({
     where: { userCustomerId: customer_id },
