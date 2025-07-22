@@ -21,6 +21,14 @@ app.use(
 
 app.use(express.json());
 
+// -------------------------- v1 ----------------------
+
+const v1App = express.Router()
+app.use('/api/v1',v1App)
+// app.use((req,res,next)=>{
+  
+// })
+
 // -----db -----
 try {
   sequelize.authenticate();
@@ -30,11 +38,11 @@ try {
 }
 
 //-----------routers--------------
-app.use("/users", userRouter);
-app.use("/saving", savingRouter);
-app.use("/current", currentRouter);
-app.use("/credit", creditRouter);
-app.use("/statements", statementRouter);
+v1App.use("/users", userRouter);
+v1App.use("/saving", savingRouter);
+v1App.use("/current", currentRouter);
+v1App.use("/credit", creditRouter);
+v1App.use("/statements", statementRouter);
 
 // app.get("/", (req, res) => {
 //   res.json({ name: "hello" });
