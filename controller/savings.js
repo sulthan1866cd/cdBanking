@@ -14,10 +14,16 @@ export const createSavingsAccount = (req, res) => {
   Saving.create(savingsAcc);
 };
 
-export const depositToSavingsAcc=async(customer_id,ammount)=>{
+export const getSavingsAccountWithCustomerId = (customer_id) => {
+  return Saving.findOne({
+    where: { userCustomerId: customer_id },
+  });
+};
+
+export const depositToSavingsAcc = async (customer_id, ammount) => {
   const savingsAcc = await Saving.findOne({
     where: { userCustomerId: customer_id },
   });
   savingsAcc.balence += ammount;
   return savingsAcc.save();
-}
+};
