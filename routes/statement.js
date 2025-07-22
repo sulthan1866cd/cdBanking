@@ -8,7 +8,7 @@ router.get("/:account/:customer_id", async (req, res) => {
   const customer_id = req.params.customer_id;
   const statements = await findAllStatementsByObj({
     account: account,
-    customer_id: customer_id,
+    userCustomerId: customer_id,
   });
 
   res.json(statements);

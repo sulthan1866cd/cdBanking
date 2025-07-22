@@ -8,10 +8,6 @@ const Statement = sequelize.define("statements", {
     primaryKey: true,
     allowNull: false,
   },
-  customer_id:{
-    type:DataTypes.STRING,
-    allowNull:false
-  },
   account:{
     type:DataTypes.STRING,
     allowNull:false
@@ -20,7 +16,7 @@ const Statement = sequelize.define("statements", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  amount: {
+  ammount: {
     type: DataTypes.DOUBLE,
     allowNull: false,
   },

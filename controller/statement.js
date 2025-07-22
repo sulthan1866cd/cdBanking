@@ -1,17 +1,17 @@
 import Statement from "../models/Statement.js";
 
 export const createStatement = (
-  customer_id,
+  userCustomerId,
   description,
   account,
-  amount,
+  ammount,
   closing_balence
 ) => {
   const statement = {
-    customer_id,
+    userCustomerId,
     description,
     account,
-    amount,
+    ammount,
     closing_balence,
   };
   Statement.create(statement);

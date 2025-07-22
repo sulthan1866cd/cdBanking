@@ -3,6 +3,7 @@ import sequelize from "../config/database.js";
 import Saving from "./Saving.js";
 import Current from "./Current.js";
 import Credit from "./Credit.js";
+import Statement from "./Statement.js";
 
 const User = sequelize.define("users", {
   customer_id: {
@@ -27,18 +28,28 @@ User.hasOne(Saving, {
 
 Saving.belongsTo(User);
 
-User.hasOne(Current, {
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
+User.hasOne(
+  Current
+  //   , {
+  //   onDelete: "CASCADE",
+  //   onUpdate: "CASCADE",
+  // }
+);
 
 Current.belongsTo(User);
 
-User.hasOne(Credit, {
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
+User.hasOne(
+  Credit
+  //   , {
+  //   onDelete: "CASCADE",
+  //   onUpdate: "CASCADE",
+  // }
+);
 
 Credit.belongsTo(User);
+
+User.hasMany(Statement);
+
+Statement.belongsTo(User);
 
 export default User;
