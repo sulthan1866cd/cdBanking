@@ -1,3 +1,5 @@
+const BASE_API_URL_V1 = "http://localhost:3000/api/v1";
+
 const validate = async () => {
   const cIDElement = document.getElementById("cID");
   const passwordElement = document.getElementById("password");
@@ -11,22 +13,19 @@ const validate = async () => {
   }
   let presentCustomer;
   try {
-    presentCustomer = await fetch(
-      `http://localhost:3000/users/${customer_id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-Type": "application/json",
-        },
-        body: JSON.stringify({ customer_id, password }),
-      }
-    );
+    presentCustomer = await fetch(`${BASE_API_URL_V1}/users/${customer_id}`, {
+      method: "PUT",
+      headers: {
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify({ customer_id, password }),
+    });
     presentCustomer = await presentCustomer.json();
     cIDMessageElement.textContent = "";
-    passwordElement.focus()
+    passwordElement.focus();
   } catch (error) {
     cIDMessageElement.textContent = "user with this customer id dose not exist";
-    console.log(error)
+    console.log(error);
     return;
   }
 
@@ -36,7 +35,8 @@ const validate = async () => {
     return;
   }
   passwordMessageElement.textContent = "";
-
+  const token = presentCustomer.token;
+  sessionStorage.setItem("token", token);
   sessionStorage.setItem("customer_id", customer_id);
   window.location.href = "/";
 };

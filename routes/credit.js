@@ -1,16 +1,20 @@
 import express from "express";
-import { depositToCreditAcc, getCreditAccountWithCustomerId } from "../controller/credit.js";
+import {
+  depositToCreditAcc,
+  getCreditAccountWithCustomerId,
+} from "../controller/credit.js";
 import { createStatement } from "../controller/statement.js";
+import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/:customer_id", async (req, res) => {
+router.get("/:customer_id", verifyToken, async (req, res) => {
   const customer_id = req.params.customer_id;
-  const creditAcc = await getCreditAccountWithCustomerId(customer_id)
+  const creditAcc = await getCreditAccountWithCustomerId(customer_id);
   res.json(creditAcc);
 });
 
-router.put("/:customer_id", async (req, res) => {
+router.put("/:customer_id", verifyToken, async (req, res) => {
   const customer_id = req.params.customer_id;
   const ammount = req.body.ammount;
   const description = req.body.description;
