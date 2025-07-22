@@ -1,9 +1,10 @@
 import express from "express";
 import { findAllStatementsByObj } from "../controller/statement.js";
+import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/:account/:customer_id", async (req, res) => {
+router.get("/:customer_id/:account", verifyToken, async (req, res) => {
   const account = req.params.account;
   const customer_id = req.params.customer_id;
   const statements = await findAllStatementsByObj({

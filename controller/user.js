@@ -5,13 +5,10 @@ export const createUser = async (req, res) => {
   try {
     const newUser = req.body;
     if (await User.findByPk(newUser.customer_id)) {
-      res.sendStatus(500);
-      return;
+      return null;
     }
     newUser.password = await bcrypt.hash(newUser.password, 12);
-    delete newUser.branch;
-    User.create(newUser);
-    res.sendStatus(201);
+    return User.create(newUser);
   } catch (error) {
     console.log("Error: " + error);
   }

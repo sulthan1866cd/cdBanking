@@ -1,3 +1,5 @@
+BASE_API_URL_V1 = "http://localhost:3000/api/v1";
+
 const createAccount = async () => {
   const cIDElement = document.getElementById("cID");
   const nameElement = document.getElementById("name");
@@ -61,14 +63,17 @@ const createAccount = async () => {
   }
   confirmPasswordMessageElement.textContent = "";
 
-  const result = await fetch("http://localhost:3000/users", {
+  const result = await fetch(`${BASE_API_URL_V1}/users`, {
     method: "POST",
     headers: {
       "content-Type": "application/json",
     },
-    body: JSON.stringify({ customer_id, name, password ,branch}),
+    body: JSON.stringify({ customer_id, name, password, branch }),
   });
   if (result.status === 201) {
+    console.log(result);
+    const resultJson = await result.json();
+    sessionStorage.setItem("token", resultJson.token);
     sessionStorage.setItem("customer_id", customer_id);
     window.location.href = "/";
   } else {

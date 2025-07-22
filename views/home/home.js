@@ -4,6 +4,8 @@ let balences;
 let cID;
 let accountNumbers;
 let user;
+const BASE_API_URL_V1 = "http://localhost:3000/api/v1";
+const token = sessionStorage.getItem("token");
 
 // --------------------- functions ----------------
 
@@ -15,7 +17,11 @@ const addDetailstoID = (details) => {
 };
 
 const loadData = async (cID) => {
-  let savingResult = await fetch(`http://localhost:3000/saving/${cID}`);
+  let savingResult = await fetch(`${BASE_API_URL_V1}/saving/${cID}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
   savingResult = await savingResult.json();
   const SavingAccountSummary = {
     SaccNo: savingResult.savings_acc_no,
@@ -24,7 +30,11 @@ const loadData = async (cID) => {
     Sifsc: savingResult.ifsc,
   };
 
-  let currentResult = await fetch(`http://localhost:3000/current/${cID}`);
+  let currentResult = await fetch(`${BASE_API_URL_V1}/current/${cID}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
   currentResult = await currentResult.json();
   const currentAccountSummary = {
     CaccNo: currentResult.current_acc_no,
@@ -33,7 +43,11 @@ const loadData = async (cID) => {
     Cifsc: currentResult.ifsc,
   };
 
-  let creditResult = await fetch(`http://localhost:3000/credit/${cID}`);
+  let creditResult = await fetch(`${BASE_API_URL_V1}/credit/${cID}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
   creditResult = await creditResult.json();
   const creditAccountSummary = {
     creditCardNo: `XXXX XXXX XXXX ${creditResult.credit_card_no.slice(-5)}`,
@@ -71,14 +85,23 @@ document.addEventListener("DOMContentLoaded", async () => {
   cID = sessionStorage.getItem("customer_id");
   if (!cID) window.location.href = "/forms/login/login.html";
 
-  user = await fetch(`http://localhost:3000/users/${cID}`);
+  user = await fetch(`${BASE_API_URL_V1}/users/${cID}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  if (user.status === 401) window.location.href = "forms/login/login.html";
   user = await user.json();
   const mainHeading = document.getElementById("mainHeading");
   mainHeading.textContent = "Greetings " + user.name + "!";
 
   // --------------------- beneficiary render ------------------------------
   const beneficiaryElement = document.getElementById("beneficiary");
-  let users = await fetch("http://localhost:3000/users");
+  let users = await fetch(`${BASE_API_URL_V1}/users`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
   users = await users.json();
   for (let user of users) {
     if (user.customer_id === cID) continue;
@@ -120,7 +143,12 @@ const openSubTab = (subTabOpenID) => {
 // -------------------------- statement ---------------------------------
 const viewStatement = async (accountType) => {
   let statementResult = await fetch(
-    `http://localhost:3000/statements/${accountType}/${cID}`
+    `${BASE_API_URL_V1}/statements/${cID}/${accountType}`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
   );
   statementResult = await statementResult.json();
   statementResult.reverse();
@@ -194,11 +222,12 @@ const depositAmmount = async () => {
     return;
   }
   const depositResult = await fetch(
-    `http://localhost:3000/${accountType}/${cID}`,
+    `${BASE_API_URL_V1}/${accountType}/${cID}`,
     {
       method: "PUT",
       headers: {
         "content-Type": "application/json",
+        authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         ammount: depositAmt,
@@ -286,10 +315,11 @@ const sendMoney = async () => {
     return;
   }
 
-  await fetch(`http://localhost:3000/${account}/${cID}`, {
+  await fetch(`${BASE_API_URL_V1}/${account}/${cID}`, {
     method: "PUT",
     headers: {
       "content-Type": "application/json",
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       ammount: -Number(ammount),
@@ -297,10 +327,11 @@ const sendMoney = async () => {
     }),
   });
 
-  await fetch(`http://localhost:3000/${account}/${beneficiary}`, {
+  await fetch(`${BASE_API_URL_V1}/${account}/${beneficiary}`, {
     method: "PUT",
     headers: {
       "content-Type": "application/json",
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       ammount: Number(ammount),

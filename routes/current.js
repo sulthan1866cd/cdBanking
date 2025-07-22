@@ -4,16 +4,17 @@ import {
   getCurrentAccountWithCustomerId,
 } from "../controller/current.js";
 import { createStatement } from "../controller/statement.js";
+import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/:customer_id", async (req, res) => {
+router.get("/:customer_id", verifyToken, async (req, res) => {
   const customer_id = req.params.customer_id;
   const currentAcc = await getCurrentAccountWithCustomerId(customer_id);
   res.json(currentAcc);
 });
 
-router.put("/:customer_id", async (req, res) => {
+router.put("/:customer_id", verifyToken, async (req, res) => {
   const customer_id = req.params.customer_id;
   const ammount = req.body.ammount;
   const description = req.body.description;
