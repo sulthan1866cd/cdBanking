@@ -145,12 +145,21 @@ const viewStatement = async (accountType) => {
       date: statement.createdAt,
       description: statement.description,
       transaction_no: statement.transaction_no,
-      ammount: statement.amount,
+      ammount: statement.ammount,
       closingBalence: statement.closing_balence,
     };
     for (const key in statement) {
       const td = document.createElement("td");
       td.textContent = statement[key];
+      if (key === "ammount") {
+        if (statement.ammount > 0) {
+          td.classList.add("text-green");
+        } else {
+          td.classList.add("text-red");
+        }
+      } else {
+        td.classList.add("text-teal");
+      }
       tr.appendChild(td);
     }
     statementElement.appendChild(tr);
@@ -241,11 +250,11 @@ const sendMoney = async () => {
   const accountElement = document.getElementById("accountType");
   const beneficiaryElement = document.getElementById("beneficiary");
   const ammountElement = document.getElementById("ammount");
-  // const remarksElement = document.getElementById("remarks");
+  const remarksElement = document.getElementById("remarks");
   const account = accountElement.value;
   const beneficiary = beneficiaryElement.value;
   const ammount = ammountElement.value;
-  // const remarks = remarksElement.value;
+  const remarks = remarksElement.value;
 
   if (account === "") {
     showMessage("Please choose an account");
@@ -272,6 +281,10 @@ const sendMoney = async () => {
     );
     return;
   }
+  if (remarks === "") {
+    showMessage("Please enter remarks to proceed");
+    return;
+  }
 
   await fetch(`http://localhost:3000/${account}/${cID}`, {
     method: "PUT",
@@ -280,7 +293,7 @@ const sendMoney = async () => {
     },
     body: JSON.stringify({
       ammount: -Number(ammount),
-      description: beneficiary,
+      description: remarks,
     }),
   });
 
@@ -291,7 +304,7 @@ const sendMoney = async () => {
     },
     body: JSON.stringify({
       ammount: Number(ammount),
-      description: beneficiary,
+      description: remarks,
     }),
   });
 
