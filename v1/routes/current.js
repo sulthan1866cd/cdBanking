@@ -2,7 +2,7 @@ import express from "express";
 import {
   depositToCurrentAcc,
 } from "../controller/current.js";
-import { createStatement } from "../controller/statement.js";
+import { setAndCreateStatement } from "../controller/statement.js";
 import { verifyToken } from "../middleware/auth.js";
 import { getCurrentAccountWithCustomerId } from "../services/current.js";
 
@@ -19,7 +19,7 @@ router.put("/:customer_id", verifyToken, async (req, res) => {
   const ammount = req.body.ammount;
   const description = req.body.description;
   const currentAcc = await depositToCurrentAcc(customer_id, ammount);
-  createStatement(
+  setAndCreateStatement(
     customer_id,
     description,
     "current",

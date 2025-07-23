@@ -1,6 +1,6 @@
-import Statement from "../models/Statement.js";
+import { createStatement } from "../services/statement.js";
 
-export const createStatement = (
+export const setAndCreateStatement = (
   userCustomerId,
   description,
   account,
@@ -14,7 +14,7 @@ export const createStatement = (
     ammount,
     closing_balence,
   };
-  Statement.create(statement);
+  createStatement(statement)
 };
 
 

@@ -1,9 +1,9 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import { createUser } from "../controller/user.js";
-import { createSavingsAccount } from "../controller/savings.js";
-import { createCurrentAccount } from "../controller/current.js";
-import { createCreditAccount } from "../controller/credit.js";
+import { setAndCreateUser } from "../controller/user.js";
+import { setAndCreateSavingsAccount } from "../controller/savings.js";
+import { setAndCreateCurrentAccount } from "../controller/current.js";
+import { setAndCreateCreditAccount } from "../controller/credit.js";
 import { generateJWT, verifyToken } from "../middleware/auth.js";
 import { getAllUsers, getUserByCId } from "../services/user.js";
 
@@ -13,14 +13,14 @@ router.get("/", verifyToken, async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const newUser = await createUser(req, res);
+  const newUser = await setAndCreateUser(req, res);
   if (!newUser) {
     res.sendStatus(500);
     return;
   }
-  createSavingsAccount(req, res);
-  createCurrentAccount(req, res);
-  createCreditAccount(req, res);
+  setAndCreateSavingsAccount(req, res);
+  setAndCreateCurrentAccount(req, res);
+  setAndCreateCreditAccount(req, res);
   const token = generateJWT(newUser);
   res.status(201).json({ token });
 });
