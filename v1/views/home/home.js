@@ -83,7 +83,7 @@ const loadBalances = () => {
 // -------------------------- DOM content loaded --------------------------------
 document.addEventListener("DOMContentLoaded", async () => {
   cID = sessionStorage.getItem("customer_id");
-  if (!cID) window.location.href = "/forms/login/login.html";
+  if (!cID || !token) window.location.href = "/forms/login/login.html";
 
   user = await fetch(`${BASE_API_URL_V1}/users/${cID}`, {
     headers: {
@@ -349,7 +349,6 @@ const sendMoney = async () => {
 
 const logout = () => {
   sessionStorage.removeItem("customer_id");
-  localStorage.removeItem("balences");
-  localStorage.removeItem("statement");
+  sessionStorage.removeItem("token");
   window.location.href = "/forms/login/login.html";
 };

@@ -17,6 +17,4 @@ export const createStatement = (
   Statement.create(statement);
 };
 
-export const findAllStatementsByObj = (obj) => {
-  return Statement.findAll({ where: obj });
-};
+

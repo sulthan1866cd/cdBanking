@@ -1,0 +1,32 @@
+import express from "express";
+
+import setupSwagger from "./config/swagger.js";
+import sequelize from "./config/database.js";
+
+import userRouter from "./routes/users.js";
+import savingRouter from "./routes/saving.js";
+import currentRouter from "./routes/current.js";
+import creditRouter from "./routes/credit.js";
+import statementRouter from "./routes/statement.js";
+import logger from "./config/logger.js";
+
+
+const app = express.Router();
+setupSwagger(app);
+
+// -----db -----
+try {
+  sequelize.authenticate();
+  logger.info("DB connected");
+} catch (error) {
+  logger.error("Error: " + error);
+}
+
+//-----------routers--------------
+app.use("/users", userRouter);
+app.use("/saving", savingRouter);
+app.use("/current", currentRouter);
+app.use("/credit", creditRouter);
+app.use("/statements", statementRouter);
+
+export default app;

@@ -1,10 +1,10 @@
 import express from "express";
 import {
   depositToCurrentAcc,
-  getCurrentAccountWithCustomerId,
 } from "../controller/current.js";
 import { createStatement } from "../controller/statement.js";
 import { verifyToken } from "../middleware/auth.js";
+import { getCurrentAccountWithCustomerId } from "../services/current.js";
 
 const router = express.Router();
 

@@ -1,10 +1,10 @@
 import express from "express";
 import {
   depositToSavingsAcc,
-  getSavingsAccountWithCustomerId,
 } from "../controller/savings.js";
 import { createStatement } from "../controller/statement.js";
 import { verifyToken } from "../middleware/auth.js";
+import { getSavingsAccountWithCustomerId } from "../services/saving.js";
 
 const router = express.Router();
 

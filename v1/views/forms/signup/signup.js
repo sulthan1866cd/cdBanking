@@ -27,7 +27,7 @@ const createAccount = async () => {
   if (name === "") {
     nameMessageElement.textContent = "Enter name";
     return;
-  } else if (name.length > 30) {
+  } else if (name.length > 50) {
     nameMessageElement.textContent = "character length should not exceed 50";
     return;
   }
@@ -71,7 +71,6 @@ const createAccount = async () => {
     body: JSON.stringify({ customer_id, name, password, branch }),
   });
   if (result.status === 201) {
-    console.log(result);
     const resultJson = await result.json();
     sessionStorage.setItem("token", resultJson.token);
     sessionStorage.setItem("customer_id", customer_id);

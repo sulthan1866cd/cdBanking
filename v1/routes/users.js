@@ -1,10 +1,11 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import { createUser, getAllUsers, getUserByCId } from "../controller/user.js";
+import { createUser } from "../controller/user.js";
 import { createSavingsAccount } from "../controller/savings.js";
 import { createCurrentAccount } from "../controller/current.js";
 import { createCreditAccount } from "../controller/credit.js";
 import { generateJWT, verifyToken } from "../middleware/auth.js";
+import { getAllUsers, getUserByCId } from "../services/user.js";
 
 const router = express.Router();
 router.get("/", verifyToken, async (req, res) => {
@@ -30,6 +31,35 @@ router.get("/:customer_id", verifyToken, async (req, res) => {
   res.json(customer);
 });
 
+/**
+ * @openapi
+ * /api/v1/users/{customer_id}:
+ *  put:
+ *   tag:
+ *      - login
+ *   summary: login in to account
+ *   parameters:
+ *   - name: customer_id
+ *     in: path
+ *     required: true
+ *     description: unique id for customer
+ *   requestBody:
+ *     required: true
+ *     content:
+ *       application/json:
+ *         schema:
+ *           type: json
+ *           example: {password : 'your password'}
+ *   responses:
+ *     200: 
+ *       description: login in and get JWT token
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: json
+ *             example: {token : 'your token'}
+ *       
+ */
 router.put("/:customer_id", async (req, res) => {
   const customer_id = req.params.customer_id;
   const password = req.body.password;
