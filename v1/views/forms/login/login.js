@@ -1,3 +1,4 @@
+
 const BASE_API_URL_V1 = "http://localhost:3000/api/v1";
 
 const validate = async () => {
@@ -25,7 +26,6 @@ const validate = async () => {
     passwordElement.focus();
   } catch (error) {
     cIDMessageElement.textContent = "user with this customer id dose not exist";
-    console.log(error);
     return;
   }
 

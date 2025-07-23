@@ -11,12 +11,6 @@ export const createCreditAccount = (req, res) => {
   Credit.create(creditAcc);
 };
 
-export const getCreditAccountWithCustomerId = (customer_id)=>{
-  return Credit.findOne({
-    where: { userCustomerId: customer_id },
-  });
-}
-
 export const depositToCreditAcc = async (customer_id, ammount) => {
   const creditAcc = await Credit.findOne({
     where: { userCustomerId: customer_id },

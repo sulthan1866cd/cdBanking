@@ -1,3 +1,4 @@
+import logger from "../config/logger.js";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 
@@ -10,14 +11,8 @@ export const createUser = async (req, res) => {
     newUser.password = await bcrypt.hash(newUser.password, 12);
     return User.create(newUser);
   } catch (error) {
-    console.log("Error: " + error);
+    logger.error("Error: " + error);
   }
 };
 
-export const getAllUsers = () => {
-  return User.findAll();
-};
 
-export const getUserByCId = (customer_id) => {
-  return User.findByPk(customer_id);
-};

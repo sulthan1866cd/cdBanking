@@ -1,6 +1,6 @@
 import express from "express";
-import { findAllStatementsByObj } from "../controller/statement.js";
 import { verifyToken } from "../middleware/auth.js";
+import { findAllStatementsByObj } from "../services/statement.js";
 
 const router = express.Router();
 

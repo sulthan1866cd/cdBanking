@@ -13,7 +13,7 @@ export const verifyToken = (req, res, next) => {
     return;
   }
   const token = authHeader.split(" ")[1];
-  jsonwebtoken.verify(token, process.env.JWT_SECTERT_KEY, (err, user) => {
+  jsonwebtoken.verify(token, process.env.JWT_SECTERT_KEY, (err) => {
     if (err) {
       res.sendStatus(401);
       return;
