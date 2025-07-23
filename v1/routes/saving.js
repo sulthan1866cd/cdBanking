@@ -2,7 +2,7 @@ import express from "express";
 import {
   depositToSavingsAcc,
 } from "../controller/savings.js";
-import { createStatement } from "../controller/statement.js";
+import { setAndCreateStatement } from "../controller/statement.js";
 import { verifyToken } from "../middleware/auth.js";
 import { getSavingsAccountWithCustomerId } from "../services/saving.js";
 
@@ -19,7 +19,7 @@ router.put("/:customer_id", verifyToken, async (req, res) => {
   const ammount = req.body.ammount;
   const description = req.body.description;
   const savingsAcc = await depositToSavingsAcc(customer_id, ammount);
-  createStatement(
+  setAndCreateStatement(
     customer_id,
     description,
     "saving",

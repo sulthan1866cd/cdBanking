@@ -1,6 +1,6 @@
-import Credit from "../models/Credit.js";
+import { createCreditAccount, getCreditAccountWithCustomerId, updateCreditAccount } from "../services/credit.js";
 
-export const createCreditAccount = (req, res) => {
+export const setAndCreateCreditAccount = (req, res) => {
   const newUser = req.body;
   const creditAcc = {
     credit_card_no: String((Math.random() * 1000000000000000).toFixed(0)),
@@ -8,13 +8,11 @@ export const createCreditAccount = (req, res) => {
     balence: 0,
     type: "Visa",
   };
-  Credit.create(creditAcc);
+  createCreditAccount(creditAcc);
 };
 
 export const depositToCreditAcc = async (customer_id, ammount) => {
-  const creditAcc = await Credit.findOne({
-    where: { userCustomerId: customer_id },
-  });
+  const creditAcc = await getCreditAccountWithCustomerId(customer_id)
   creditAcc.balence += ammount;
-  return creditAcc.save();
+  return updateCreditAccount(creditAcc)
 };

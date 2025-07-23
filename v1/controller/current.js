@@ -1,7 +1,11 @@
-import Current from "../models/Current.js";
+import {
+  createCurrentAccount,
+  getCurrentAccountWithCustomerId,
+  updateCurrentAccount,
+} from "../services/current.js";
 import { ifscs } from "../util/ifsc.js";
 
-export const createCurrentAccount = (req, res) => {
+export const setAndCreateCurrentAccount = (req, res) => {
   const newUser = req.body;
   const branch = newUser.branch;
   const currentAcc = {
@@ -11,13 +15,11 @@ export const createCurrentAccount = (req, res) => {
     branch: branch,
     ifsc: ifscs[branch],
   };
-  Current.create(currentAcc);
+  createCurrentAccount(currentAcc);
 };
 
 export const depositToCurrentAcc = async (customer_id, ammount) => {
-  const currentAcc = await Current.findOne({
-    where: { userCustomerId: customer_id },
-  });
+  const currentAcc = await getCurrentAccountWithCustomerId(customer_id)
   currentAcc.balence += ammount;
-  return currentAcc.save();
+  return updateCurrentAccount(currentAcc);
 };

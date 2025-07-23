@@ -1,6 +1,6 @@
 import express from "express";
 import { depositToCreditAcc } from "../controller/credit.js";
-import { createStatement } from "../controller/statement.js";
+import { setAndCreateStatement } from "../controller/statement.js";
 import { verifyToken } from "../middleware/auth.js";
 import { getCreditAccountWithCustomerId } from "../services/credit.js";
 
@@ -38,7 +38,7 @@ router.put("/:customer_id", verifyToken, async (req, res) => {
   const ammount = req.body.ammount;
   const description = req.body.description;
   const creditAcc = await depositToCreditAcc(customer_id, ammount);
-  createStatement(
+  setAndCreateStatement(
     customer_id,
     description,
     "credit",

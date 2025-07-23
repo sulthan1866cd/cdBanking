@@ -1,7 +1,11 @@
-import Saving from "../models/Saving.js";
+import {
+  createSavingsAccount,
+  getSavingsAccountWithCustomerId,
+  updateSavingsAccount,
+} from "../services/saving.js";
 import { ifscs } from "../util/ifsc.js";
 
-export const createSavingsAccount = (req, res) => {
+export const setAndCreateSavingsAccount = (req, res) => {
   const newUser = req.body;
   const branch = newUser.branch;
   const savingsAcc = {
@@ -11,15 +15,11 @@ export const createSavingsAccount = (req, res) => {
     branch,
     ifsc: ifscs[branch],
   };
-  Saving.create(savingsAcc);
+  createSavingsAccount(savingsAcc);
 };
 
-
-
 export const depositToSavingsAcc = async (customer_id, ammount) => {
-  const savingsAcc = await Saving.findOne({
-    where: { userCustomerId: customer_id },
-  });
+  const savingsAcc = await getSavingsAccountWithCustomerId(customer_id)
   savingsAcc.balence += ammount;
-  return savingsAcc.save();
+  return updateSavingsAccount(savingsAcc);
 };
