@@ -5,7 +5,8 @@ export const setAndCreateStatement = (
   description,
   account,
   ammount,
-  closing_balence
+  closing_balence,
+  next
 ) => {
   const statement = {
     userCustomerId,
@@ -14,7 +15,9 @@ export const setAndCreateStatement = (
     ammount,
     closing_balence,
   };
-  createStatement(statement)
+  try {
+    createStatement(statement);
+  } catch (error) {
+    next(error);
+  }
 };
-
-

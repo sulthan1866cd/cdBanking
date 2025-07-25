@@ -44,7 +44,7 @@ const createAccount = async () => {
 
   const passwordMessageElement = document.getElementById("passwordMessage");
   if (password === "") {
-    passwordMessageElement.textContent = "Enter correct password";
+    passwordMessageElement.textContent = "Enter password";
     return;
   } else if (password.length < 8 || password.length > 30) {
     passwordMessageElement.textContent =
@@ -76,9 +76,7 @@ const createAccount = async () => {
     sessionStorage.setItem("customer_id", customer_id);
     window.location.href = "/";
   } else {
-    const toastElemnt = document.getElementById("toast");
-    toastElemnt.style.display = "flex";
-    toastElemnt.textContent = "user with costumer id already exists";
+    cIDMessageElement.textContent = "user with costumer id already exists";
   }
 };
 

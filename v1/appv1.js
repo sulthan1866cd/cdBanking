@@ -9,11 +9,12 @@ import currentRouter from "./routes/current.js";
 import creditRouter from "./routes/credit.js";
 import statementRouter from "./routes/statement.js";
 import logger from "./config/logger.js";
+import errorHandler from "./middleware/errorHandler.js";
 
 
 const app = express.Router();
 setupSwagger(app);
-
+app.use(errorHandler)
 // -----db -----
 try {
   sequelize.authenticate();
