@@ -1,20 +1,20 @@
 import express from "express";
-import { depositToCurrentAcc } from "../controller/current.js";
-import { setAndCreateStatement } from "../controller/statement.js";
-import { verifyToken } from "../middleware/auth.js";
-import { getCurrentAccountWithCustomerId } from "../services/current.js";
+import { depositToSavingsAcc } from "../../controller/savings.js";
+import { setAndCreateStatement } from "../../controller/statement.js";
+import { verifyToken } from "../../middleware/auth.js";
+import { getSavingsAccountWithCustomerId } from "../../services/saving.js";
 
 const router = express.Router();
 
 /**
  * @openapi
- * /api/v1/current/{customer_id}:
+ * /api/v1/saving/{customer_id}:
  *  get:
  *   security:
  *      - authorization: []
  *   tags:
- *      - Current
- *   summary: get current account     
+ *      - Savings
+ *   summary: get saving account
  *   parameters:
  *   - name: customer_id
  *     in: path
@@ -22,12 +22,12 @@ const router = express.Router();
  *     description: unique id for customer
  *   responses:
  *     200:
- *       description: current acc details
+ *       description: saving acc details
  *       content:
  *         application/json:
  *           schema:
  *             type: json
- *             example: {"current_card_no": "111111111","balence": 100,"type": "Visa","createdAt": "2025-07-20","updatedAt": "2025-07-22","userCustomerId": "cid"}
+ *             example: {"saving_card_no": "111111111","balence": 100,"type": "Visa","createdAt": "2025-07-20","updatedAt": "2025-07-22","userCustomerId": "cid"}
  *     401:
  *       description: un authorization
  *     500:
@@ -35,19 +35,19 @@ const router = express.Router();
  */
 router.get("/:customer_id", verifyToken, async (req, res) => {
   const customer_id = req.params.customer_id;
-  const currentAcc = await getCurrentAccountWithCustomerId(customer_id);
-  res.json(currentAcc);
+  const savingsAcc = await getSavingsAccountWithCustomerId(customer_id);
+  res.json(savingsAcc);
 });
 
 /**
  * @openapi
- * /api/v1/current/{customer_id}:
+ * /api/v1/saving/{customer_id}:
  *  put:
  *   security:
  *      - authorization: []
  *   tags:
- *      - Current
- *   summary: deposit / witdraw from current account
+ *      - Savings
+ *   summary: deposit / witdraw from saving account
  *   parameters:
  *   - name: customer_id
  *     in: path
@@ -72,14 +72,13 @@ router.put("/:customer_id", verifyToken, async (req, res, next) => {
   const customer_id = req.params.customer_id;
   const ammount = req.body.ammount;
   const description = req.body.description;
-  const currentAcc = await depositToCurrentAcc(customer_id, ammount, next);
-  
+  const savingsAcc = await depositToSavingsAcc(customer_id, ammount, next);
   setAndCreateStatement(
     customer_id,
     description,
-    "current",
+    "saving",
     ammount,
-    currentAcc.balence,
+    savingsAcc.balence,
     next
   );
   res.sendStatus(200);

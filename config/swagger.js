@@ -19,7 +19,7 @@ const jsDoc = swaggerJsdoc({
       },
     },
   },
-  apis: ["./v1/routes/*.js"],
+  apis: ["./routes/*.js"],
 });
 
 const setupSwagger = (app) => {

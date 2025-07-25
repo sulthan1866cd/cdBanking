@@ -3,7 +3,7 @@ import cors from "cors";
 
 import { configDotenv } from "dotenv";
 
-import v1App from "./v1/appv1.js"
+import v1App from "./routes/v1/appv1.js"
 
 const app = express();
 configDotenv();
