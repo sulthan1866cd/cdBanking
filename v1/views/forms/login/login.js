@@ -15,7 +15,7 @@ const validate = async () => {
   let presentCustomer;
   try {
     presentCustomer = await fetch(`${BASE_API_URL_V1}/users/${customer_id}`, {
-      method: "PUT",
+      method: "POST",
       headers: {
         "content-Type": "application/json",
       },

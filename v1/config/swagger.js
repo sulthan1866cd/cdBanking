@@ -8,15 +8,25 @@ const jsDoc = swaggerJsdoc({
       title: "CD-Banking",
       version: "1.0.0",
     },
+    components: {
+      securitySchemes: {
+        authorization: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+          value: "Bearer <JWT token here>",
+        },
+      },
+    },
   },
-  apis: ["./routes/*.js"],
+  apis: ["./v1/routes/*.js"],
 });
 
 const setupSwagger = (app) => {
   app.use("/api-docs", swaggerUiExpress.serve, swaggerUiExpress.setup(jsDoc));
-  app.get('/api.json',(req,res)=>{
-    res.send(jsDoc)
-  })
+  // app.get('/api.json',(req,res)=>{
+  //   res.send(jsDoc)
+  // })
 };
 
 export default setupSwagger;

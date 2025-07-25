@@ -3,7 +3,9 @@ import jsonwebtoken from "jsonwebtoken";
 configDotenv();
 
 export const generateJWT = (user) => {
-  return jsonwebtoken.sign(user.toJSON(), process.env.JWT_SECTERT_KEY);
+  return jsonwebtoken.sign(user.toJSON(), process.env.JWT_SECTERT_KEY, {
+    expiresIn: "30m",
+  });
 };
 
 export const verifyToken = (req, res, next) => {
