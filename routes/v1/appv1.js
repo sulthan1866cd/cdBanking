@@ -1,15 +1,15 @@
 import express from "express";
 
-import setupSwagger from "./config/swagger.js";
-import sequelize from "./config/database.js";
+import setupSwagger from "../../config/swagger.js";
+import sequelize from "../../config/database.js";
 
-import userRouter from "./routes/users.js";
-import savingRouter from "./routes/saving.js";
-import currentRouter from "./routes/current.js";
-import creditRouter from "./routes/credit.js";
-import statementRouter from "./routes/statement.js";
-import logger from "./config/logger.js";
-import errorHandler from "./middleware/errorHandler.js";
+import userRouter from "./users.js";
+import savingRouter from "./saving.js";
+import currentRouter from "./current.js";
+import creditRouter from "./credit.js";
+import statementRouter from "./statement.js";
+import logger from "../../config/logger.js";
+import errorHandler from "../../middleware/errorHandler.js";
 
 
 const app = express.Router();

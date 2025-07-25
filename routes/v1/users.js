@@ -1,10 +1,10 @@
 import express from "express";
-import { isCorrectPassword, setAndCreateUser } from "../controller/user.js";
-import { setAndCreateSavingsAccount } from "../controller/savings.js";
-import { setAndCreateCurrentAccount } from "../controller/current.js";
-import { setAndCreateCreditAccount } from "../controller/credit.js";
-import { generateJWT, verifyToken } from "../middleware/auth.js";
-import { getAllUsers, getUserByCId } from "../services/user.js";
+import { isCorrectPassword, setAndCreateUser } from "../../controller/user.js";
+import { setAndCreateSavingsAccount } from "../../controller/savings.js";
+import { setAndCreateCurrentAccount } from "../../controller/current.js";
+import { setAndCreateCreditAccount } from "../../controller/credit.js";
+import { generateJWT, verifyToken } from "../../middleware/auth.js";
+import { getAllUsers, getUserByCId } from "../../services/user.js";
 
 const router = express.Router();
 

@@ -1,8 +1,8 @@
 import express from "express";
-import { depositToCreditAcc } from "../controller/credit.js";
-import { setAndCreateStatement } from "../controller/statement.js";
-import { verifyToken } from "../middleware/auth.js";
-import { getCreditAccountWithCustomerId } from "../services/credit.js";
+import { depositToCreditAcc } from "../../controller/credit.js";
+import { setAndCreateStatement } from "../../controller/statement.js";
+import { verifyToken } from "../../middleware/auth.js";
+import { getCreditAccountWithCustomerId } from "../../services/credit.js";
 
 const router = express.Router();
 
