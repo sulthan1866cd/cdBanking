@@ -16,7 +16,7 @@
 ## Tech stack
 
 - frontend: html, css, js
-- backend: node.js
+- backend: node.js ( v22.17.0 )
 - database: postgres
 
 ## Frontend
@@ -26,7 +26,7 @@
 ## Backend
 
 Yarn is used in this project to manage our packages.
-
+- version 1.22.22
 ```shell
 # check if yarn has been installed
 yarn -v
